@@ -4,7 +4,7 @@
 
 touch "$(date)"
 cd ..
-git add -a
+git add .
 git commit -m "Тестовый коммит от $(date)"
 git remote add origin git@github.com:bakafox/NSU_ITCN.git
 git push -u origin master
