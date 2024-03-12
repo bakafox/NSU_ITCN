@@ -41,7 +41,7 @@ for a in links_raw:
 
     # append website if needed
     if not link.startswith('https://ngs.ru'):
-        link = 'https://ngs.ru' + link
+        link = f"https://ngs.ru{link}"
     links.add(link)
 
 
@@ -85,8 +85,8 @@ for link in links:
     if not date:
         date = '—'
     else:
-        #date = date.attrs['datetime']
-        date = date.text
+        date = date.attrs['datetime']
+        #date = date.text
 
     views = bs.find('span', class_='_7TAx-')
     if not views:
