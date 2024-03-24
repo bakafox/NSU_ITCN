@@ -1,0 +1,42 @@
+#nonogram-wrapper {
+	display: flex;
+	justify-content: center;
+}
+
+#nonogram {
+	border: 4px solid #000;
+}
+.nonogram-row {
+    display: flex;
+    flex-direction: row;
+}
+.nonogram-item {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+    width: 80px;
+    height: 80px;
+}
+
+.nonogram-hint {
+    font-size: 1.5rem;
+}
+.nonogram-hint__completed {
+    font-style: italic;
+    text-decoration: line-through;
+    opacity: .5;
+}
+
+.nonogram-cell {
+    border: 2px solid #000;
+	border-width: 2px 0 0 2px;
+    cursor: pointer;
+}
+.nonogram-cell__selected {
+    background-color: #dfa;
+}
+.nonogram-cell__selected::before {
+    content: '✔️';
+    font-size: 2rem;
+    font-weight: bold;
+}
