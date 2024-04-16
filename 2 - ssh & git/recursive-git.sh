@@ -1,6 +1,6 @@
 #!/bin/bash
-# (этот скрипт предполагает, что ssh ключ уже
-# сгенерирован и добавлен в настройках GitHub)
+# this script estimates you already generated
+# an SSH key and added it in GitHub settings
 
 touch "$(date)"
 cd ..
