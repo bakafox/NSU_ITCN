@@ -2,7 +2,7 @@
 # https://www.tecmint.com/install-wordpress-with-nginx-in-ubuntu-20-04/
 # https://www.youtube.com/watch?v=PsMhopODLTY
 # commands sequence for running WordPress @ NGINX,
-# on VMWare, made for and tested on Xubuntu 22.04
+# on VMware, made for and tested on Xubuntu 22.04
 
 echo -e "\n=== 1. Installing and configuring NGINX..."
 sudo systemctl stop apache2 && sudo apt remove apache2

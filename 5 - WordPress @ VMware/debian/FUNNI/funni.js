@@ -1,21 +1,23 @@
 let patternGame = new Array();
 function createPatternGame(cols, rows, difficulty) {
+	patternGame = [];
     // create cols x rows matrix of random-ish bools
-    for (let i = 0; i < rows; i++) {
-        patternGame[i] = [];
-        for (let j = 0; j < cols; j++) {
-            patternGame[i][j] = Math.random() > difficulty;
+    for (let col = 0; col < cols; col++) {
+        patternGame[col] = [];
+        for (let row = 0; row < rows; row++) {
+            patternGame[col][row] = Math.random() > difficulty;
         }
     }
 }
 
 let patternUser = new Array();
 function createPatternUser(cols, rows) {
+	patternUser = [];
     // create cols x rows matrix of zeroes
-    for (let i = 0; i < rows; i++) {
-        patternUser[i] = [];
-        for (let j = 0; j < cols; j++) {
-            patternUser[i][j] = false;
+     for (let col = 0; col < cols; col++) {
+        patternUser[col] = [];
+        for (let row = 0; row < rows; row++) {
+            patternUser[col][row] = false;
         }
     }
 }
@@ -37,7 +39,7 @@ function calculateHint(type, index) {
             }
         }
         if (hintNoCounter > 0) {
-            hint += (hintNoCounter + ' ');
+            hint += hintNoCounter;
         }
     }
 
@@ -54,7 +56,7 @@ function calculateHint(type, index) {
             }
         }
         if (hintNoCounter > 0) {
-            hint += (hintNoCounter + ' ');
+            hint += hintNoCounter;
         }
     }
 
@@ -65,26 +67,26 @@ function generateField(cols, rows) {
     let game = document.querySelector('#nonogram');
     game.innerHTML = '';
 
-    for (let row = 0; row < rows+1; row++) {
+    for (let col = 0; col < cols+1; col++) {
         let rowElement = document.createElement('div');
         rowElement.className = 'nonogram-row';
 
-        for (let col = 0; col < cols+1; col++) {
+        for (let row = 0; row < rows+1; row++) {
             let itemElement = document.createElement('div');
             itemElement.classList.add('nonogram-item');
 
-            if (row == 0) { // vertical hints
+            if (col === 0) { // vertical hints
                 itemElement.classList.add('nonogram-hint');
-                if (col == 0) { // empty corner
+                if (row === 0) { // empty corner
                     itemElement.innerHTML = '';
                 }
                 else {
-                    itemElement.innerHTML = calculateHint('col', col-1);
+                    itemElement.innerHTML = calculateHint('col', row-1);
                 }
             }
-            else if (col == 0) { // horizontal hints
+            else if (row === 0) { // horizontal hints
                 itemElement.classList.add('nonogram-hint');
-                itemElement.innerHTML = calculateHint('row', row-1);
+                itemElement.innerHTML = calculateHint('row', col-1);
             }
             else { // cells
                 itemElement.classList.add('nonogram-cell');
@@ -92,8 +94,8 @@ function generateField(cols, rows) {
                     itemElement.classList.toggle('nonogram-cell__selected');
                     togglePatternUser(col-1, row-1);
                     if (
-                        (checkForLineCompletion('col', col-1) ? 1 : 0) +
-                        (checkForLineCompletion('row', row-1) ? 1 : 0)
+                        (checkForLineCompletion('col', row-1) ? 1 : 0) +
+                        (checkForLineCompletion('row', col-1) ? 1 : 0)
                     === 2) {
                         checkForVictory();
                     }
@@ -110,7 +112,7 @@ function generateField(cols, rows) {
 
 
 function togglePatternUser(col, row) {
-    patternUser[row][col] = !patternUser[row][col];
+    patternUser[col][row] = !patternUser[col][row];
 }
 
 function checkForLineCompletion(type, index) {
@@ -153,9 +155,11 @@ function checkForLineCompletion(type, index) {
 }
 
 function checkForVictory() {
-    for (let row = 0; row < patternGame[0].length; row++) {
-        if (!checkForLineCompletion('col', row)) {
-            return;
+    for (let col = 0; col < patternGame.length; col++) {
+        for (let row = 0; row < patternGame[0].length; row++) {
+            if (patternGame[col][row] !== patternUser[col][row]) {
+            	return;
+            }
         }
     }
 
@@ -178,4 +182,3 @@ function init() {
 }
 
 init(); // start on first page load
-
