@@ -41,15 +41,15 @@
 MyDevil (движок CT8.PL) не позволяет менять глобальные конфиги PHP (да и чего угодно другого, что лежит вне `~`) напрямую, но [можно менять некоторые параметры](https://wiki.mydevil.net/PHP) ([включая размер загрузок](https://www.php.net/manual/ru/ini.core.php)) через файлик per-directory конфигурации PHP `~/.user.ini`:
 
 ```
-# Максимально допустимый размер загружаемого файла
+# max allowed uploadable file size
 upload_max_filesize = 666M
 
-# Максимальный размер данных, отправляемых методом POST
-# (д.б. БОЛЬШЕ ИЛИ РАВНО, чем "upload_max_filesize")
+# max allowed data size sent via POST
+# (should be HIGHER OR EQUAL than "upload_max_filesize")
 post_max_size = 666M
 
-# Поднименм димит потребляемой памяти
-# (д.б. БОЛЬШЕ, чем "upload_max_filesize" и "post_max_size")
+# PHP memory (RAM) per-process limit
+# (should be HIGHER than both "upload_max_filesize" and "post_max_size")
 memory_limit = 999M
 ```
 
