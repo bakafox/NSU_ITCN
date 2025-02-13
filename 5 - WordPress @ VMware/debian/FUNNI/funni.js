@@ -1,11 +1,11 @@
 let patternGame = new Array();
-function createPatternGame(cols, rows, difficulty) {
+function createPatternGame(cols, rows, frequency) {
 	patternGame = [];
     // create cols x rows matrix of random-ish bools
     for (let col = 0; col < cols; col++) {
         patternGame[col] = [];
         for (let row = 0; row < rows; row++) {
-            patternGame[col][row] = Math.random() > difficulty;
+            patternGame[col][row] = Math.random() > frequency;
         }
     }
 }
@@ -171,12 +171,42 @@ function checkForVictory() {
 
 
 
-function init() {
-    const cols = 3 + Math.floor(Math.random()*5);
-    const rows = 3 + Math.floor(Math.random()*5);
-    const difficulty = 0.1 + Math.random() * 0.5;
+const diffBtns = document.querySelectorAll('.diff-btn');
 
-    createPatternGame(cols, rows, difficulty);
+diffBtns.forEach((elm1) => {
+    let coef = 1;
+
+    if (elm1.id === 'diff-hard') {
+        coef = 4;
+    }
+    else if (elm1.id === 'diff-norm') {
+        coef = 2;
+    }
+
+    elm1.addEventListener('click', () => {
+        document.querySelectorAll('.diff-btn').forEach(
+            (elm2) => elm2.style.fontWeight = (elm1.id === elm2.id) ? 700 : 400
+        );
+        updateDifficulty(coef);
+        init();
+    });
+});
+
+// easy difficulty by default
+let cols = 3 + Math.floor(Math.random() * 5);
+let rows = 3 + Math.floor(Math.random() * 5);
+let frequency = 0.1 + Math.random() * 0.5;
+
+function updateDifficulty(coef) {
+    cols = (1 + coef*2) + Math.floor(Math.random() * 3);
+    rows = (1 + coef*2) + Math.floor(Math.random() * 3);
+    frequency = (0.6 - coef**(1/2)*0.2) + Math.random() * 0.3;
+}
+
+
+
+function init() {
+    createPatternGame(cols, rows, frequency);
     createPatternUser(cols, rows);
     generateField(cols, rows);
 }
